@@ -1,26 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { getAllNotes } from "./utils/local-data";
-import { Link, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/Homepage/Homepage";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import HomePage from "./pages/HomePage/HomePage";
 import DetailPage from "./pages/DetailPage/DetailPage";
 import ArchivesPage from "./pages/ArchivesPage/ArchivesPage";
 import NewNotesPage from "./pages/NewNotesPage/NewNotesPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import { getAccessToken } from "./utils/network-data";
+import Navbar from "./components/Navbar/Navbar";
 
 
 function App() {
   return (
     <div className="app-container">
       <header>
-        <h1><Link to="/">Aplikasi Catatan</Link></h1>
-        <nav className="navigation">
-          <ul>
-            <li>
-              <Link to="/archives">Arsip</Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar/>
       </header>
       <main>
         <Routes>

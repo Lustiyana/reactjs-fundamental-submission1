@@ -2,16 +2,22 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import NoteList from "../../components/NoteList/NoteList";
 import InputSearch from "../../components/InputSearch/InputSearch";
-import { getActiveNotes, getAllNotes } from "../../utils/local-data";
+import { getAllNotes } from "../../utils/local-data";
 import { useEffect, useState } from "react";
+import { getActiveNotes } from "../../utils/network-data";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams()
   const [notes, setNotes] = useState([])
   
+  const fetchData = async()=>{
+    const data = await getActiveNotes()
+    setNotes(data.data)
+  }
+
   useEffect(()=>{
-    setNotes(getActiveNotes())
+    fetchData()
   }, [])
   
   useEffect(()=>{
@@ -19,7 +25,7 @@ const HomePage = () => {
       const filteredData = notes.filter((item)=>item.title.toLowerCase().includes(searchParams.get('keyword').toLowerCase()))
       setNotes(filteredData)
     } else{
-      setNotes(getActiveNotes())
+      fetchData()
     }
   }, [searchParams.get('keyword')])
 
