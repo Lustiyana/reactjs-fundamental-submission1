@@ -160,6 +160,14 @@ async function deleteNote(id) {
   return { error: false, data: responseJson.data };
 }
 
+const getTheme = () => {
+  return localStorage.getItem('theme') || 'light';
+}
+
+const getLanguage = () => {
+  return localStorage.getItem('lang') || 'id'
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -173,4 +181,6 @@ export {
   archiveNote,
   unarchiveNote,
   deleteNote,
+  getTheme,
+  getLanguage
 };

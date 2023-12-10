@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { addNote } from "../../utils/local-data";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
+import { addNote } from "../../utils/network-data";
 
 const NewNotesPage = () => {
   const navigate = useNavigate();

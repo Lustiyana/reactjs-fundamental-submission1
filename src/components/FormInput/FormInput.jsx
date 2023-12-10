@@ -14,5 +14,6 @@ export default FormInput
 FormInput.propTypes = {
   label: PropType.string,
   type: PropType.string,
-  onChange: PropType.func
+  onChange: PropType.func,
+  value: PropType.string
 }

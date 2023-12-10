@@ -2,7 +2,7 @@ import parser from "html-react-parser";
 import { Link } from "react-router-dom";
 import { showFormattedDate } from "../../utils";
 import PropType from "prop-types";
-import NoteListEmpty from "../NotListEmpty/NotListEmpty";
+import NoteListEmpty from "../NoteListEmpty/NoteListEmpty";
 
 const NoteList = ({ data }) => {
   return (

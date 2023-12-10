@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import FormInput from "../../components/FormInput/FormInput";
 import { register } from "../../utils/network-data";
 import { useNavigate } from "react-router-dom";
+import { TRANSLATE } from "../../constants/lang";
+import LanguageContext from "../../contexts/language";
 
 const RegisterPage = () => {
   const [modifiedData, setModifiedData] = useState({
@@ -11,6 +13,7 @@ const RegisterPage = () => {
     confirmPassword: "",
   });
   const navigate = useNavigate();
+  const {lang} = useContext(LanguageContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +30,7 @@ const RegisterPage = () => {
 
   return (
     <section className="regsiter-page">
-      <h2>Isi form untuk mendaftar akun.</h2>
+      <h2>{TRANSLATE[lang].registerTitle}</h2>
       <form className="input-register" onSubmit={handleSubmit}>
         <FormInput
           label="Name"
@@ -67,8 +70,8 @@ const RegisterPage = () => {
         <button type="submit">Register</button>
       </form>
       <p>
-        Sudah punya akun?
-        <a href="/login">Masuk di sini</a>
+        {TRANSLATE[lang].footerRegister}
+        <a href="/login">{TRANSLATE[lang].loginLink}</a>
       </p>
     </section>
   );

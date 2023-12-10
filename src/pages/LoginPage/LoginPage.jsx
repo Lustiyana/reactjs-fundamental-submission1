@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FormInput from "../../components/FormInput/FormInput";
 import { login, putAccessToken } from "../../utils/network-data";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../contexts/auth";
+import { TRANSLATE } from "../../constants/lang";
+import LanguageContext from "../../contexts/language";
 
 const LoginPage = () => {
   const [modifiedData, setModifiedData] = useState({
@@ -9,18 +12,35 @@ const LoginPage = () => {
     password: "",
   });
   const navigate = useNavigate()
+  const {token, setToken} = useContext(AuthContext)
+  const {lang} = useContext(LanguageContext)
+  const [loading, setLoading] = useState(false)
 
+  useEffect(()=>{
+    if(token){
+      navigate(-1)
+    }
+  }, [token])
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await login(modifiedData)
-    if(!res.error){
-      putAccessToken(res.data.accessToken)
-      navigate('/')
+    setLoading(true)
+    try{
+      const res = await login(modifiedData)
+      if(!res.error){
+        putAccessToken(res.data.accessToken)
+        setToken(res.data.accessToken)
+        navigate('/')
+      }
+      setLoading(false)
+    } catch(err){
+      alert(err)
+      setLoading(false)
     }
   };
+
   return (
     <section className="login-page">
-      <h2>Yuk, login untuk menggunakan aplikasi.</h2>
+      <h2>{TRANSLATE[lang].loginTitle}</h2>
       <form className="input-login" onSubmit={handleSubmit}>
         <FormInput
           label="Email"
@@ -38,11 +58,11 @@ const LoginPage = () => {
             setModifiedData({ ...modifiedData, password: e.target.value })
           }
         />
-        <button type="submit">Login</button>
+        <button type="submit">{loading ? 'Loading...' : 'Login'}</button>
       </form>
       <p>
-        Belum punya akun?
-        <a href="/register">Daftar di sini</a>
+        {TRANSLATE[lang].footerLogin}
+        <a href="/register">{TRANSLATE[lang].registerLink}</a>
       </p>
     </section>
   );
